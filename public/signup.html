@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+    <title>RPSLS Lobby</title>
+</head>
+
+<body>
+    <main>
+        <div class="flex justify-center" id="app">
+            <div class="flex-row rounded border-gray=400 border-2 bg-gray-300 p-6 w-72 max-w-72 overflow-hidden"
+                id="mainContent">
+                <div id="signUpContent">
+                    <span v-on:click="goBack" class="rounded hover:bg-gray-100 w-32 text-left">← Go Back</span>
+                    <h1 class="text-2xl">Sign Up</h1>
+                    <div>
+                        <label class="block" for="username">Username</label>
+                        <input v-on:input="updateUsername" id="username" class="block border-gray-400 border-2 rounded" name="username" placeholder="Username..." required />
+                    </div>
+                    <div>
+                        <label class="block" for="email">Email</label>
+                        <input v-on:input="updateEmail" type="email" id="email" class="block border-gray-400 border-2 rounded" name="email" placeholder="Email (i.e. jon@example.com)" required />
+                    </div>
+                    <div>
+                        <label class="block" for="password">Password</label>
+                        <input v-on:input="updatePassword" type="password" id="password" class="block border-gray-400 border-2 rounded" name="password" placeholder="Password..." required />
+                    </div>
+                    <button v-on:click="submitSignUp" id="submitBtn" type="submit"
+                    class="bg-white border-black border-2 rounded-xl w-32">Submit</button>
+                </div>
+                <div id="confirmation"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="./signup.js"></script>
+    <script>
+        let socket
+        Vue.createApp({
+            data() {
+                return {
+                    username: '',
+                    email: '',
+                    password: ''
+                }
+            },
+
+            
+            sockets: {
+                
+            },
+
+            methods: {
+                updateUsername: function (event) { this.username = event.target.value },
+                updateEmail: function (event) { this.email = event.target.value },
+                updatePassword: function (event) { this.password = event.target.value },
+                goBack: function () { location.href = './index.html' },
+
+                createNewStream: function (data) {
+                    // creation of dataStream
+                    let newStream = new ArrayBuffer(data.length)
+                    let dv = new DataView(newStream)
+                    for (let i = 0; i < data.length; i++) {
+                        dv.setUint8(i, data[i])
+                    }
+                    return newStream
+                },
+
+                loadText: function (data, inputValue) {
+                    for (let i = 0; i < inputValue.length; i++) data.push(inputValue.charCodeAt(i))
+                    data.push(1)
+                },
+
+                submitSignUp: function () {
+                    try {
+                        let data = []
+                        this.loadText(data, this.username)
+                        this.loadText(data, this.email)
+                        this.loadText(data, this.password)
+                        let content = this.createNewStream(data)
+                        socket.emit('createAccount', content)
+                        setTimeout(() => {
+                            location.reload()
+                        }, 250);
+                    } catch (e) { alert(e.message) }
+                }
+            },
+
+            created: function () {
+                socket = io()
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

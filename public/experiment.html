@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <title>Send Mail</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src=
+    "https://smtpjs.com/v3/smtp.js">
+  </script>
+ 
+  <script type="text/javascript">
+    function sendEmail() {
+        axios.post('/players', {player: 'yes'})
+        .then(res => console.log(res.data))
+        .catch(err => alert(err))
+
+        // axios.get('./players.json')
+        // .then(res => console.log(res.data))
+        // .then(data => console.log(data))
+
+        // fetch('./players.json')
+        // .then((res) => res.json())
+        // .then((data) => alert(data))
+    //   Email.send({
+    //     Host: "smtp.elasticemail.com",
+    //     Username: "jarodd99@gmail.com",
+    //     Password: "50D5CCF5760A2C1B88298FA3B78508C834D7",
+    //     To: '10940701@my.uvu.edu',
+    //     From: "jarodd99@gmail.com",
+    //     Subject: "Online verification for ",
+    //     Body: "Well that was easy!!",
+    //   })
+    //     .then(function (message) {
+    //       alert(`${message}`)
+    //     });
+    }
+  </script>
+</head>
+ 
+<body>
+  <form method="post">
+    <input type="button" value="Send Email"
+        onclick="sendEmail()" />
+  </form>
+</body>
+ 
+</html>

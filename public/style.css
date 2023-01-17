@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+form > input {
+    margin: 10px 5px;
+}
+
+#mainContent {  /* TODO: finish rerendering the signup page */
+    min-width: 400px;
+    max-width: 600px;
+}
+
+#app {
+    min-height: 60vh;
+}
+
+button {
+    margin-top: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #fefefe
+    }
+
+    table {
+        background-color: #121212;
+        color: #fefefe
+    }
+
+    #mainContent {
+        background-color: #565656;
+        color: white;
+    }
+
+    #player1Move, #player2Move {
+        color: black
+    }
+
+    input, button {
+        color: black;
+        background-color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #fefefe;
+        color: #121212
+    }
+
+    table { 
+        background-color: #fefefe;
+        color: #121212
+    }
+}

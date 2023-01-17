@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/dist/output.css" /> -->
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <!-- <div id="app">{{ message }}</div> -->
+        <div class="flex py-16 justify-center" id="app">
+
+            <div class="flex-row rounded border-gray-400 border-2 bg-gray-300 p-6 w-72 max-w-72 overflow-hidden"
+                id="mainContent">
+                <h1 class="text-2xl">Sign into your account</h1>
+                <div  id="notification" class="p-8 flex-row justify-center"></div>
+                <div class="flex-row">
+                    <div>
+                        <label class="block" for="username">Username</label>
+                        <input v-on:input="updateUsername" class="block border-gray-400 border-2 rounded" ref="username" name="username"
+                            aria-placeholder="Username..." required></input>
+                    </div>
+                    <div>
+                        <label class="block" for="password">Password</label>
+                        <input v-on:input="updatePassword" class="block border-gray-400 border-2 rounded" action="post" name="password"
+                            id="password" aria-placeholder="Password..." required></input>
+                    </div>
+                    <div class="flex flex-col justify-between h-24 my-3">
+                        <div>
+                            <button v-on:click="login" class="rounded hover:bg-gray-100 w-32 text-left p-2">Log In</button>
+                        </div>
+                        <div>
+                            <button v-on:click="noAccount" class="rounded hover:bg-gray-100 w-32 text-left p-2">New? Sign up!</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./login.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    username: '',
+                    password: '',
+                }
+            },
+
+            methods: {
+                noAccount: function (event) {
+                    document.location = "./signup.html"
+                },
+
+                updateUsername: function (event) {
+                    this.username = event.target.value
+                },
+
+                updatePassword: function (event) {
+                    this.password = event.target.value
+                },
+
+                createNewStream: function (data) {
+                    // creation of dataStream
+                    let newStream = new ArrayBuffer(data.length)
+                    let dv = new DataView(newStream)
+                    for (let i = 0; i < data.length; i++) {
+                        dv.setUint8(i, data[i])
+                    }
+                    return newStream
+                },
+                
+                loadText: function (data, inputValue) {
+                    for (let i = 0; i < inputValue.length; i++) data.push(inputValue.charCodeAt(i))
+                    data.push(1)
+                },
+
+                login: function () {
+                    let data = []
+                    this.loadText(data, this.username)
+                    this.loadText(data, this.password)
+                    let content = this.createNewStream(data)
+                    socket.emit('login', content)
+                }
+            },
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

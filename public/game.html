@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <div>
+            <ul id="messages"></ul>
+            <p class="nameBanner">Decisions for Player <span id="playerNumber">1</span></p>
+            <p>Other player's status: <span id="otherPlayerStatus">Not Ready</span></p>
+        </div>
+        <div class="horizontal">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+            <button id="lizard">Lizard</button>
+            <button id="spock">Spock</button>
+        </div>
+        <form id="form" action="">
+            <input id="input" autocomplete="off" />
+            <label for="emojis">Add emoji:</label>
+            <select name="emojis" id="emojis">
+                <option selected value="">None</option>
+                <option value="0x1F986">Duck</option>
+                <option value="0x1F4A9">Poop</option>
+            </select>
+            <button>Send</button>
+        </form>
+        <button id="voice">Record voice</button>
+        <label for="players">Choose player number</label>
+        <div class="horizontal"></div>
+        <select name="players" id="playerNumbers">
+            <option selected value="1">1</option>
+            <option value="2">2</option>
+        </select>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./main.js"></script>
+</body>
+</html>

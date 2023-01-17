@@ -1,0 +1,38 @@
+
+
+@media screen and (max-width: 1500px) {
+    .mainContent {
+        width: 1300px;
+        min-width: 1300px;
+    }
+}
+
+@media screen and (min-width: 1501px) {
+    .mainContent {
+        width: 100%
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #232323;
+        color: #fefefe
+    }
+
+    #gameText {
+        background-color: #454545
+    }
+
+    textarea {
+        background-color: #565656;
+        color: white;
+    }
+
+    #chatbox {
+        background-color: #343434;
+    }
+
+    #player1Move, #player2Move {
+        color: black
+    }
+}

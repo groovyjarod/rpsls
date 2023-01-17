@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../room.css">
+    <title>Room 8</title>
+</head>
+<body class="overflow-x-hidden overflow-hidden">
+    <main class="h-screen w-screen">
+        <div class="invisible" id="roomNumber">1</div>
+        <div class="flex flex-col h-full items-start mainContent" style="padding: 2.5% 5% 5% 5%;">
+            <button 8 style="flex: 1" id="goBack">← Return to Lobby</button>
+            <div class="flex flex-row w-full h-full" style="flex: 19">
+                <div class="flex flex-col p-4" style="flex: 1">
+                    <p id="commandBanner" class="text-2xl"></p>
+                    <div id="commandController" class="flex flex-row justify-evenly">
+                    </div>
+                    <br />
+                    <textarea class="border-2 border-black p-2" name="command" id="commandContent" cols="30" rows="10"></textarea>
+                    <button class="rounded hover:bg-gray-100 w-32 text-left p-2" id="makeMove">Send</button>
+                    <span id="voice">Click to use Voice</span>
+                </div>
+                <div style="flex: 2" class="border-2 border-black rounded p-4 bg-gray-300" id="gameText">
+                    <p class="text-2xl">Game</p>
+                    <div id="gameContent" class="flex flex-row h-full overflow-hidden p-6">
+                        <div id="player1Move" class="border-2 border-black rounded w-3/6 p-4 bg-white">
+                            <div class="flex flex-row justify-between">
+                                <div id="player1Name"></div>
+                                <div id="player1Wins"></div>
+                                <div id="player1Losses"></div>
+                            </div>
+                            <div id="player1Decision"></div>
+                        </div>
+                        <div id="player2Move" class="border-2 border-black rounded w-3/6 p-4 bg-white">
+                            <div class="flex flex-row justify-between">
+                                <div id="player2Name"></div>
+                                <div id="player2Wins"></div>
+                                <div id="player2Losses"></div>
+                            </div>
+                            <div id="player2Decision"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1" class="p-4">
+                    <p class="text-2xl">Chat</p>
+                    <div id="chatContent" class="flex flex-col h-full overflow-hidden">
+                        <div class="w-full h-48 border-2 border-black rounded overflow-scroll overflow-x-hidden p-2" id="chatbox">
+        
+                        </div>
+                        <div class="w-full border-2 border-black rounded overflow-scroll overflow-x-hidden" id="spectators">
+                            <p class="text-xl h-16">Spectators</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data () {
+                return {
+                    roomNumber: parseInt(document.getElementById('roomNumber').innerHTML),
+                    isPlayer: sessionStorage.getItem('playerStatus'),
+                    user: JSON.parse(sessionStorage.getItem('user'))
+                }
+            },
+            methods: {
+                createNewStream: function (data) {
+                    // creation of dataStream
+                    let newStream = new ArrayBuffer(data.length)
+                    let dv = new DataView(newStream)
+                    for (let i = 0; i < data.length; i++) {
+                        dv.setUint8(i, data[i])
+                    }
+                    return newStream
+                },
+
+                loadText: function (data, inputValue) {
+                    for (let i = 0; i < inputValue.length; i++) data.push(inputValue.charCodeAt(i))
+                    data.push(1)
+                },
+
+                goBack: function () {
+                    let data = []
+
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

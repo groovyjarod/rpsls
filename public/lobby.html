@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./lobby.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Lobby</title>
+</head>
+<body>
+    <main>
+        <div class="flex py-16 justify-center">
+            <div class="flex-row rounded border-gray-400 border-2 bg-gray-300 w-80 max-w-96 min-h-96 h-96" id="content">
+                <div class="bg-white p-4" id="mainContent">
+                    <p class="text-2xl"><span id="lobbyName"></span>Lobby</p>
+                    <span class="text-lg" id="wins"></span>
+                    <span class="text-lg" id="losses"></span>
+                </div>
+                <hr />
+                <div class="flex flex-row" id="secondaryContent">
+                    <div class="flex flex-col content-evenly m-4" style="flex: 1">
+                        <button class="rounded hover:bg-gray-100 w-32 text-left p-2" id="createGame">join Room</button>
+                        <button class="rounded hover:bg-gray-100 w-32 text-left p-2" id="logout">Log Out</button>
+                    </div>
+                    <div class="flex flex-col align-center" style="flex: 4">
+                        <h2 class="text-2xl ml-4">Leaderboards</h2>
+                        <table class="w-4/6 border-2 border-black rounded m-4 bg-white">
+                            <tbody id="leaderboards" class="p-4 m-4 overflow-scroll">
+                                <tr class="m-4">
+                                    <td style="margin: 55px">Player</td>
+                                    <td>Wins</td>
+                                    <td>Losses</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="createGameModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content flex flex-row p-8">
+              <span class="close">&times;</span>
+              <div id="inviteForm" class="flex flex-col min-h-full mt-80 min-w-full">
+                    <p class="text-2xl">Join a room:</p>
+                    <div class="flex flex-wrap justify-evenly" id="rooms"></div>
+              </div>
+            </div>
+          
+          </div>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./lobby.js"></script>
+</body>
+</html>
